@@ -1,7 +1,20 @@
 let color = 'black';
-
+let click = false;
 document.addEventListener('DOMContentLoaded', () =>{
     createBoard(16);
+
+    document.querySelector('body').addEventListener('click', (e) => {
+        if (e.target.tagName != 'BUTTON') {
+            click = !click;
+            let draw = document.querySelector('#draw');
+            if (click) {
+                draw.innerHTML = 'Draw is On. Now You Can Draw';
+            } else {
+                draw.innerHTML = `Draw is off. Click to Draw.`;
+            }
+        }
+    } );
+
     let btn_popup = document.querySelector('#popup');
     btn_popup.addEventListener('click', () => {
         let size = getSize();
@@ -25,7 +38,7 @@ const createBoard = (size) => {
 }
 
 const getSize = () => {
-    let input = prompt('Enter Size of Board.');
+    let input = prompt('Enter a number to determine size of board.');
     let message = document.querySelector('#message');
     if (input === '') {
         //innerHTML will add text to the paragraph.
@@ -39,10 +52,12 @@ const getSize = () => {
 }
 //using arrow functions causes 'this' not to work.
 function colorDiv() {
-    if(color == 'random') {
-        this.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`
-    } else {
-        this.style.backgroundColor = 'black';
+    if (click) {
+        if(color == 'random') {
+            this.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`
+        } else {
+            this.style.backgroundColor = 'black';
+        }
     }
 };
 
